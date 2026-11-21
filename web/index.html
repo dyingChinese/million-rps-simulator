@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>百万猜拳演化模拟器 · 实时控制台</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <style>
+    /* 关键骨架样式内联，避免首屏闪烁（完整样式见 /css/style.css） */
+    html, body { margin: 0; padding: 0; height: 100%; background: #080b12; color: #e8eef9; }
+    body { overflow: hidden; }
+    #app {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr) 360px;
+      grid-template-rows: 56px minmax(0, 1fr) 34px;
+      grid-template-areas: "top top top" "left center right" "bottom bottom bottom";
+      height: 100vh;
+      height: 100dvh;
+      position: relative;
+      z-index: 1;
+    }
+    #topbar { grid-area: top; }
+    #left { grid-area: left; }
+    #center { grid-area: center; }
+    #right { grid-area: right; }
+    #bottom { grid-area: bottom; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header id="topbar" class="topbar"></header>
+    <aside id="left" class="side side-left"></aside>
+    <main id="center" class="center">
+      <div class="stage-head">
+        <div id="view-tabs" class="view-tabs"></div>
+        <div id="stage-legend" class="stage-legend"></div>
+      </div>
+      <div id="stage-wrap" class="stage-wrap">
+        <canvas id="gl-canvas" class="stage-canvas"></canvas>
+        <canvas id="overlay-canvas" class="stage-overlay" aria-label="策略星图交互层"></canvas>
+        <div id="stage-hud-tl" class="stage-hud hud-tl"></div>
+        <div id="stage-hud-tr" class="stage-hud hud-tr"></div>
+        <div id="gl-fallback-tag" class="stage-tag hidden">WebGL2 不可用 · 已切换 2D 回退渲染</div>
+        <div id="stage-foot" class="stage-foot"></div>
+      </div>
+    </main>
+    <aside id="right" class="side side-right"></aside>
+    <footer id="bottom" class="bottom"></footer>
+  </div>
+  <div id="alertbar" class="alertbar hidden" role="status"></div>
+  <pre id="crash" class="crash hidden"></pre>
+  <noscript>本控制台需要启用 JavaScript 才能运行。</noscript>
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

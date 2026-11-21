@@ -1,0 +1,78 @@
+{
+  "report": "web UI final self-check (no-browser environment) — round 1 + round 2 addendum",
+  "generatedAt": "2026-11-20T20:10:00+08:00",
+  "environment": {
+    "browserScreenshot": "blocked",
+    "reason": "DSH Windows sandbox denies named pipe creation; Edge headless fails at mojo platform_channel (0x5); wkhtmltoimage is QtWebKit (no ESM/WebGL2/CSS Grid)",
+    "nodeVersion": "v22.22.3",
+    "realBackend": "http://127.0.0.1:8080 (integration pending: currently no guilds/classFlow fields; restarted required)"
+  },
+  "deliverables": [
+    "web/index.html",
+    "web/css/style.css",
+    "web/js/app.js",
+    "web/js/protocol.js",
+    "web/js/glview.js",
+    "web/js/charts.js",
+    "web/js/panels.js",
+    "web/js/format.js",
+    "web/js/mock.js",
+    "web/js/selftest.js",
+    "test/web-stub.test.js",
+    "test/web-dom-stub.js"
+  ],
+  "round1": {
+    "nodeStub": { "command": "node test/web-stub.test.js", "total": 4, "passed": 4, "failed": 0 },
+    "inPageSelftest": { "total": 21, "passed": 21, "failed": 0 },
+    "leadProtocolTest": { "total": 24, "passed": 24, "failed": 0 },
+    "realBackendE2E": { "passed": true, "parseMs": 0.3, "uploadMs": 0.62, "webglDrawCallsPerFrame": 2 }
+  },
+  "round2": {
+    "scope": ["guild ranking panel", "class mobility (classFlow + flowIn/flowOut)", "guilds config group", "mock guild/mobility simulation", "selftest extensions"],
+    "changedFiles": [
+      "web/js/protocol.js",
+      "web/js/mock.js",
+      "web/js/panels.js",
+      "web/js/selftest.js",
+      "web/js/format.js",
+      "web/css/style.css",
+      "test/web-stub.test.js"
+    ],
+    "nodeStub": {
+      "command": "node test/web-stub.test.js",
+      "subtests": 4,
+      "passed": 4,
+      "failed": 0,
+      "mockModeChecks": 21,
+      "newChecks": [
+        "mock frames contain guilds / classFlow / flowIn・flowOut",
+        "guild ranking + class mobility DOM rendered",
+        "mock setConfig guild parameter hot-update (count 32 -> 16)",
+        "mock guilds disabled -> placeholder shown / table hidden"
+      ]
+    },
+    "inPageSelftest": { "total": 25, "passed": 25, "skipped": 0, "failed": 0 },
+    "realModeFakeServer": { "guildRows": 11, "levelsChip": "Lv4", "mobility": "0.3%", "reconnect": true },
+    "oldBackendTolerance": { "guildsPlaceholder": true, "mobility": "0%", "nanCount": 0, "passed": true },
+    "formatRegressionFixed": "trimNum produced stray decimal point: '100. 万' / '0.%' -> fixed with assertions",
+    "leadProtocolTest": {
+      "mockSide": "all pass",
+      "realSideFailures": 3,
+      "reason": "running backend (8080) has not been restarted with guilds/classFlow integration yet; frontend normalizes missing fields to defaults"
+    },
+    "parameterFieldCount": 64,
+    "mockConfigAlignedWith": "src/core/config.js (only intentional diff: mock guilds.enabled=true for demo)"
+  },
+  "performanceTargets": {
+    "frameParseUploadMs": { "target": 8, "measured": 0.92, "ok": true },
+    "webglDrawCalls": { "target": "1 points + 1 quad", "measured": 2, "ok": true },
+    "domThrottleMs": { "target": 80, "measured": 90, "ok": true },
+    "thirdPartyDeps": 0
+  },
+  "knownIssues": [
+    "No browser screenshot possible in sandbox; visual review by human in a real browser (URLs in report).",
+    "Real backend at 8080 needs restart to expose guilds/classFlow; until then protocol test section C real-side checks fail and UI shows guild placeholder / 0% mobility (graceful fallback verified).",
+    "Mock uses 20,000 sample points (~0.9MB/frame) vs real 65,536 (~2.4MB/frame).",
+    "node --test cannot spawn child processes in this sandbox; run test files directly."
+  ]
+}

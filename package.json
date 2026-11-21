@@ -1,0 +1,35 @@
+{
+  "name": "rps-million",
+  "version": "0.1.0",
+  "description": "百万猜拳演化模拟器 — 百万级智能体石头剪刀布演化经济模拟器 + 高性能 WebGL 实时可视化（零依赖 Node.js）",
+  "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js --port 8080 --preset standard",
+    "million": "node src/index.js --preset million",
+    "bench": "node bench/bench.js",
+    "test": "node scripts/run-tests.js",
+    "check": "node scripts/check.js",
+    "smoke": "node scripts/smoke-server.js",
+    "verify:pause": "node scripts/verify-pause.js",
+    "web": "node scripts/serve-web.js",
+    "explore": "node bench/explore.js --pop 200000 --rounds 300 --every 25 --dividend"
+  },
+  "keywords": [
+    "simulation",
+    "agent-based",
+    "rock-paper-scissors",
+    "evolution",
+    "webgl",
+    "visualization",
+    "high-performance",
+    "soa",
+    "sharedarraybuffer",
+    "worker-threads"
+  ],
+  "license": "MIT"
+}
